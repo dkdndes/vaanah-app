@@ -37,11 +37,20 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-central-1
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      run: |
-        # Login to AWS ECR
-        $(aws ecr get-login --no-include-email --region eu-central-1)
+    - name: 'Get Login to AWS ECR'
+      id: ecr-login
+      uses: thalesvon/ecr-login@master
+      with:
+        args: 'get-login --no-include-email --region ${AWS_REGION}'
+    - name: 'Docker Login'
+      run: ${{ steps. ecr-login.outputs.login-string }}
+
+    # - name: Login to Amazon ECR
+    #   id: login-ecr
+    #   run: |
+    #     # Login to AWS ECR
+    #     $(aws ecr get-login --no-include-email --region eu-central-1)
+
 #        Install curl jq python3 and AWS ClI
 #        apt get --no-cache curl jq python3 py-pip && pip install awscli==1.18.154
 
