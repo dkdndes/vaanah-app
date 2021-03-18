@@ -15,7 +15,7 @@ jobs:
       id: commit-status
       run: |
         # Check the status of the Git commit
-        CURRENT_STATUS=$(curl --url https://api.github.com/vaanah-app/${{ github.repository }}/commits/${{ github.sha }}/status --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | jq -r '.state');
+        CURRENT_STATUS=$(curl --url https://api.github.com/vaana/${{ github.repository }}/commits/${{ github.sha }}/status --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' | jq -r '.state');
         echo "Current status is: $CURRENT_STATUS"
         while [ "${CURRENT_STATUS^^}" = "PENDING" ]; 
           do sleep 10; 
@@ -43,36 +43,26 @@ jobs:
       with:
         args: 'get-login --no-include-email --region ${AWS_REGION}'
 
-    # - name: Login to Amazon ECR
-    #   id: login-ecr
-    #   run: |
-    #     # Login to AWS ECR
-    #     $(aws ecr get-login --no-include-email --region eu-central-1)
-
-#        Install curl jq python3 and AWS ClI
-#        apt get --no-cache curl jq python3 py-pip && pip install awscli==1.18.154
-
-
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       run: |
         export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
         echo "ACCOUNT_ID= $ACCOUNT_ID"
-        export REPOSITORY_URL=$ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaanah-app-dev:${CI_PIPELINE_ID} && echo $REPOSITORY_URL
+        export REPOSITORY_URL=$ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:${CI_PIPELINE_ID} && echo $REPOSITORY_URL
         cd ./
         # Build a docker container and
         docker build -t $REPOSITORY_URL .
         # push it to ECR so that it can be deployed to EKS.
         docker push $REPOSITORY_URL
-        docker tag $REPOSITORY_URL $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaanah-app-dev:latest
-        docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaanah-app-dev:latest
+        docker tag $REPOSITORY_URL $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
+        docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
 
     - name: Deploy to EKS
       id: deploy-containers
       env:
-        CLUSTER_NAME: vaanah-app-dev
+        CLUSTER_NAME: vaana-dev
       run: |
         # Deploy to Amazon EKS
         #
         eksctl utils write-kubeconfig --kubeconfig kubeconfig-$CLUSTER_NAME.yml --cluster $CLUSTER_NAME --region $AWS_DEFAULT_REGION
-        export KUBECONFIG=${PWD}/kubeconfig-vaanah-app-dev.yml
+        export KUBECONFIG=${PWD}/kubeconfig-vaana-dev.yml
