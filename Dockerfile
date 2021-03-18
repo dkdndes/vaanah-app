@@ -2,7 +2,7 @@ FROM python:3.6
 
 ENV PYTHONUNBUFFERED 1
 
-ENV APP_ROOT /web-shop-web-app
+ENV APP_ROOT /vaanah-app
 
 WORKDIR ${APP_ROOT}
 
@@ -24,20 +24,4 @@ RUN chmod 775 -R ${APP_ROOT}
 
 CMD  ['python3 manage.py collectstatic --noinput', '&&', '/bin/sh','-c','python manage.py runserver']
 
-EXPOSE 8081
-
-# FROM python:3.8
-
-# WORKDIR ${APP_ROOT}
-
-# ENV APP_ROOT /web-shop-web-app
-
-# COPY requirements.txt ${APP_ROOT}/requirements.txt
-
-# RUN pip3 install -r ${APP_ROOT}/requirements.txt
-
-# RUN chmod 775 -R ${APP_ROOT}
-
-# CMD ["python3 manage.py collectstatic --noinput", "&&", "/bin/sh","-c","python manage.py runserver"]
-
-# EXPOSE 8081
+EXPOSE 8080
