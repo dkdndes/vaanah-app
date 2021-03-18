@@ -37,25 +37,34 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-central-1
 
-    - name: 'Login to AWS ECR'
-      id: ecr-login
-      uses: thalesvon/ecr-login@master
-      with:
-        args: 'get-login --no-include-email --region ${AWS_REGION}'
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+      # with:
+      #   args: 'get-login --no-include-email --region ${AWS_REGION}'
 
     - name: Build, tag, and push image to Amazon ECR
-      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vaanah-app-dev
+        IMAGE_TAG: ${{ github.sha }}
       run: |
-        export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-        echo "ACCOUNT_ID= $ACCOUNT_ID"
-        export REPOSITORY_URL=$ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:${CI_PIPELINE_ID} && echo $REPOSITORY_URL
-        cd ./
-        # Build a docker container and
-        docker build -t $REPOSITORY_URL .
-        # push it to ECR so that it can be deployed to EKS.
-        docker push $REPOSITORY_URL
-        docker tag $REPOSITORY_URL $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
-        docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    # - name: Build, tag, and push image to Amazon ECR
+    #   id: build-image
+    #   run: |
+    #     export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+    #     echo "ACCOUNT_ID= $ACCOUNT_ID"
+    #     export REPOSITORY_URL=$ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:${CI_PIPELINE_ID} && echo $REPOSITORY_URL
+    #     cd ./
+    #     # Build a docker container and
+    #     docker build -t $REPOSITORY_URL .
+    #     # push it to ECR so that it can be deployed to EKS.
+    #     docker push $REPOSITORY_URL
+    #     docker tag $REPOSITORY_URL $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
+    #     docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
 
     - name: Deploy to EKS
       id: deploy-containers
