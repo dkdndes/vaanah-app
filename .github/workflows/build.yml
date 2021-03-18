@@ -28,7 +28,7 @@ jobs:
         fi
 
     - name: Checkout
-      uses: actions/checkout@cicd
+      uses: actions/checkout@v0.1
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
