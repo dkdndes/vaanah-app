@@ -40,10 +40,11 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       run: |
-        # Install curl jq python3 and AWS ClI
-        apt get --no-cache curl jq python3 py-pip && pip install awscli==1.18.154
         # Login to AWS ECR
         $(aws ecr get-login --no-include-email --region eu-central-1)
+#        Install curl jq python3 and AWS ClI
+#        apt get --no-cache curl jq python3 py-pip && pip install awscli==1.18.154
+
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
