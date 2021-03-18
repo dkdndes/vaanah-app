@@ -39,7 +39,6 @@ jobs:
 
     - name: Login to Amazon ECR
       id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
       run: |
         # Login to AWS ECR
         $(aws ecr get-login --no-include-email --region eu-central-1)
