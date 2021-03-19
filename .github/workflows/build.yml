@@ -66,12 +66,19 @@ jobs:
     #     docker tag $REPOSITORY_URL $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
     #     docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
 
-    - name: Deploy to EKS
-      id: deploy-containers
+    - name: Deploy to EKS cluster
+      uses: kodermax/kubectl-aws-eks@master
       env:
-        CLUSTER_NAME: vaana-dev
-      run: |
-        # Deploy to Amazon EKS
-        #
-        eksctl utils write-kubeconfig --kubeconfig kubeconfig-$CLUSTER_NAME.yml --cluster $CLUSTER_NAME --region $AWS_DEFAULT_REGION
-        export KUBECONFIG=${PWD}/kubeconfig-vaana-dev.yml
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA_STAGING }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vaana-dev
+        IMAGE_TAG: ${{ github.sha }}
+      with:
+        args: set image deployment/$ECR_REPOSITORY $ECR_REPOSITORY=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        
+    - name: verify deployment
+      uses: kodermax/kubectl-aws-eks@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: rollout status deployment/vaana-dev
