@@ -40,8 +40,6 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
-      # with:
-      #   args: 'get-login --no-include-email --region ${AWS_REGION}'
 
     - name: Build, tag, and push image to Amazon ECR
       env:
@@ -52,33 +50,19 @@ jobs:
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-    # - name: Build, tag, and push image to Amazon ECR
-    #   id: build-image
-    #   run: |
-    #     export ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-    #     echo "ACCOUNT_ID= $ACCOUNT_ID"
-    #     export REPOSITORY_URL=$ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:${CI_PIPELINE_ID} && echo $REPOSITORY_URL
-    #     cd ./
-    #     # Build a docker container and
-    #     docker build -t $REPOSITORY_URL .
-    #     # push it to ECR so that it can be deployed to EKS.
-    #     docker push $REPOSITORY_URL
-    #     docker tag $REPOSITORY_URL $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
-    #     docker push $ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-dev:latest
-
-    - name: Deploy to EKS cluster
-      uses: kodermax/kubectl-aws-eks@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA_STAGING }}
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: vaana-dev
-        IMAGE_TAG: ${{ github.sha }}
-      with:
-        args: set image deployment/$ECR_REPOSITORY $ECR_REPOSITORY=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    # - name: Deploy to EKS cluster
+    #   uses: kodermax/kubectl-aws-eks@master
+    #   env:
+    #     KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA_STAGING }}
+    #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+    #     ECR_REPOSITORY: vaana-dev
+    #     IMAGE_TAG: ${{ github.sha }}
+    #   with:
+    #     args: set image deployment/$ECR_REPOSITORY $ECR_REPOSITORY=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
-    - name: verify deployment
-      uses: kodermax/kubectl-aws-eks@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-      with:
-        args: rollout status deployment/vaana-dev
+    # - name: Verify deployment
+    #   uses: kodermax/kubectl-aws-eks@master
+    #   env:
+    #     KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+    #   with:
+    #     args: rollout status deployment/vaana-dev
