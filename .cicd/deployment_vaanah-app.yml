@@ -5,7 +5,7 @@ metadata:
   namespace: vaanah-dev
   name: vaanah-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: DjangoOscar
