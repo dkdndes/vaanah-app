@@ -44,7 +44,7 @@ jobs:
 ### Test
     - name: Build, tag, and push image to Amazon ECR
       env:
-        ECR_REGISTRY: ${{ 213153998492.dkr.ecr.region.amazonaws.com }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: vaanah-app-dev
         IMAGE_TAG: ${{ github.sha }}
       run: |
