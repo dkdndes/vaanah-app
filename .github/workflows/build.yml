@@ -44,13 +44,13 @@ jobs:
 ### Test
     - name: Build, tag, and push image to Amazon ECR
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REGISTRY: ${{ 213153998492.dkr.ecr.region.amazonaws.com }}
         ECR_REPOSITORY: vaanah-app-dev
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-#        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/vaana-app-dev:latest
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
     # - name: Deploy to EKS cluster
     #   uses: kodermax/kubectl-aws-eks@master

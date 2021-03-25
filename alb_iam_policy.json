@@ -192,17 +192,29 @@
       {
           "Effect": "Allow",
           "Action": "sts:AssumeRole",
-          "Resource": "arn:aws:iam::150751824958:role/gitlab-eks-*"
+          "Resource": "arn:aws:iam::213153998492:role/gitlab-eks-*"
       },
       {
-          "Effect": "Allow",
-          "Action": [
-              "ecr:BatchCheckLayerAvailability",
-              "ecr:BatchGetImage",
-              "ecr:GetDownloadUrlForLayer",
-              "ecr:GetAuthorizationToken"
-          ],
-          "Resource": "*"
-      }
+        "Sid":"AllowPush",
+        "Effect":"Allow",
+        "Action":[
+           "ecr:GetDownloadUrlForLayer",
+           "ecr:BatchGetImage",
+           "ecr:BatchCheckLayerAvailability",
+           "ecr:PutImage",
+           "ecr:InitiateLayerUpload",
+           "ecr:UploadLayerPart",
+           "ecr:CompleteLayerUpload"
+        ],
+        "Resource":"arn:aws:ecr:eu-central-1:213153998492:repository/vaanah-app-dev"
+     },
+     {
+        "Sid":"GetAuthorizationToken",
+        "Effect":"Allow",
+        "Action":[
+           "ecr:GetAuthorizationToken"
+        ],
+        "Resource":"*"
+     }
   ]
 }
