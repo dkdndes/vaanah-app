@@ -50,7 +50,7 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $AWS_ACCESS_KEY_ID.dkr.ecr.eu-central-1.amazonaws.com/vaanah-app-dev:version1.0.test
-        docker push $AWS_ACCESS_KEY_ID.dkr.ecr.eu-central-1.amazonaws.com/vaanah-app-dev
+        docker push $AWS_ACCESS_KEY_ID.dkr.ecr.eu-central-1.amazonaws.com/vaanah-app-dev:version1.0.test
 
 #        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
