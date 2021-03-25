@@ -49,8 +49,8 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $AWS_ACCESS_KEY_ID.dkr.ecr.eu-central-1.amazonaws.com/$ECR_REPOSITORY:latest
-        docker push $AWS_ACCESS_KEY_ID.dkr.ecr.eu-central-1.amazonaws.com/$ECR_REPOSITORY:latest
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $AWS_ACCESS_KEY_ID.dkr.ecr.eu-central-1.amazonaws.com/vaanah-app-dev:latest
+        docker push $AWS_ACCESS_KEY_ID.dkr.ecr.eu-central-1.amazonaws.com/vaanah-app-dev:latest
 
 #        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
