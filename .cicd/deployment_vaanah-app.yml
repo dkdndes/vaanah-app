@@ -5,7 +5,7 @@ metadata:
   namespace: vaanah-dev
   name: vaanah-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: DjangoOscar
@@ -15,8 +15,8 @@ spec:
         app: DjangoOscar
     spec:
       containers:
-      - name: vaanah-app-dev
-        image: 213153998492.dkr.ecr.eu-central-1.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG
+      - name: vaanah-app
+        image: 213153998492.dkr.ecr.eu-central-1.amazonaws.com/$ECR_REPOSITORY
         ports:
         - containerPort: 8080
           protocol: TCP
