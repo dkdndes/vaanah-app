@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: vaanah-app
-        image: 213153998492.dkr.ecr.eu-central-1.amazonaws.com/$ECR_REPOSITORY:fe601adf4bd072dcd71d6defad057eece03bd91f
+        image: 213153998492.dkr.ecr.eu-central-1.amazonaws.com/vaanah-app:8f04e2a34068a53ec3412e8f74028f8abf376999
         ports:
         - containerPort: 8080
           protocol: TCP
