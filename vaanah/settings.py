@@ -13,8 +13,26 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 from oscar.defaults import *
 
+from django.contrib.gis.measure import D
+from django.db import models
+from pathlib import Path
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# OSGEO et GDAL
+if os.name == 'nt':
+    import platform
+    OSGEO4W = r"C:\OSGeo4W"
+    if '64' in platform.architecture()[0]:
+        OSGEO4W += "64"
+    assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
+    os.environ['OSGEO4W_ROOT'] = OSGEO4W
+    os.environ['GDAL_DATA'] = OSGEO4W + r"\share\gdal"
+    os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
+    GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal301'
+    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,8 +46,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#django-oscar stores
+GOOGLE_MAPS_API_KEY ='AIzaSyAh-Dqecabi3mVQSx8isuGNcvZHrszdhbs'
+STORES_GEOGRAPHIC_SRID = 3577
+STORES_GEODETIC_SRID = 4326
+STORES_MAX_SEARCH_DISTANCE = None
+
+
 
 # Application definition
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,6 +65,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
 
     # from documantation site
     'django.contrib.sites',
@@ -80,6 +108,8 @@ INSTALLED_APPS = [
     'treebeard',
     'sorl.thumbnail',   # Default thumbnail backend, can be replaced
     'django_tables2',
+    'stores',
+    'stores.dashboard'
 ]
 
 # from documantation site
@@ -142,12 +172,18 @@ HAYSTACK_CONNECTIONS = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'postgis_31_sample',
+        'USER': 'postgres',
+        'PASSWORD': 'admin',
+        'HOST': 'localhost',
         'PORT': '',
+        #'USER': '',
+        #'PASSWORD': '',
+        #'HOST': '',
+        #'PORT': '',
         'ATOMIC_REQUESTS': True,
     }
 }

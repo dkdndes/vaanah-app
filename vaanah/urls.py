@@ -18,6 +18,9 @@ from django.urls import include, path
 
 from django.apps import apps
 
+from django.views.i18n import JavaScriptCatalog
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +28,15 @@ urlpatterns = [
     # from documantation site
     path('i18n/', include('django.conf.urls.i18n')),
     path('', include(apps.get_app_config('oscar').urls[0])),
+
+    # django-stores
+    # adds URLs for the dashboard store manager
+    path('dashboard/stores/', apps.get_app_config('stores_dashboard').urls),
+
+    # adds URLs for overview and detail pages
+    path('stores/', apps.get_app_config('stores').urls),
+
+    # adds internationalization URLs
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+
 ]
