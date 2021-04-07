@@ -40,7 +40,14 @@ if os.name == 'nt':
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!w191r985n+1r-r^v@c0!+q0+a0f7i2++2r+-)qtvv@0u9guy#'
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Email Sender parameters
+# EMAIL_HOST          = 'smtp.strato.com'
+# EMAIL_PORT          = 587
+# EMAIL_HOST_USER     = 'support@terinnova.com'
+# EMAIL_HOST_PASSWORD = '#TeamTerinnova2021'
+# EMAIL_USE_TLS = True
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
