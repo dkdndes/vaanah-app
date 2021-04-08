@@ -1,0 +1,18 @@
+{% load i18n %}
+
+<form
+  class="form-inline my-2 my-lg-0 mx-auto"
+  method="GET"
+  action="{% url 'search:search' %}"
+>
+  <input
+  style="width: 300px;"
+    class="form-control mr-sm-2"
+    name="q"
+    placeholder="Search"
+    aria-label="Search"
+  />
+  <button class="btn btn btn-secondary my-2 my-sm-0" type="submit">
+    {% trans "Search" %}
+  </button>
+</form>
