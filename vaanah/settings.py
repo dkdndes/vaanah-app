@@ -16,7 +16,7 @@ from oscar.defaults import *
 from django.contrib.gis.measure import D
 from django.db import models
 from pathlib import Path
-
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -56,11 +56,33 @@ STORES_GEOGRAPHIC_SRID = 3577
 STORES_GEODETIC_SRID = 4326
 STORES_MAX_SEARCH_DISTANCE = None
 
+#internationalization
+LANGUAGES = [
+    ('es', 'Spanish'),
+    ('de', 'German'),
+    ('en', 'English'),
+    #('fr', 'French'),
+    #... and so on
+]
+
+#Adding stores and admin to dashboard nav bar
+OSCAR_DASHBOARD_NAVIGATION += [
+    {
+        'label': _('Store manager'),
+        'icon': 'fa fa-shopping-bag',
+        'url_name': 'stores-dashboard:store-list',
+    },
+    {
+        'label': _('Admin site'),
+        'icon': 'fas fa-lock',
+        'url_name': 'admin:index',
+        'access_fn': lambda user, url_name, url_args, url_kwargs: user.is_staff,
+    },
+]
+
 
 
 # Application definition
-
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -113,22 +135,23 @@ INSTALLED_APPS = [
     'treebeard',
     'sorl.thumbnail',   # Default thumbnail backend, can be replaced
     'django_tables2',
+    'apps.user',
     'stores',
-    'stores.dashboard',
-    'apps.user'
+    'stores.dashboard'
+] 
 
-]
-
-# from documantation site
+# from documentation site
 SITE_ID = 1
+
 
 # model user
 AUTH_USER_MODEL = 'user.User'
 
 
 AUTHENTICATION_BACKENDS = (
-    'oscar.apps.customer.auth_backends.EmailBackend',
+    #'oscar.apps.customer.auth_backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'vaanah-app.apps.customer.authentification.EmailOrUsernameModelBackend'
 )
 
 MIDDLEWARE = [
@@ -183,20 +206,13 @@ HAYSTACK_CONNECTIONS = {
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'vaanadb',
+        'NAME': 'postgres',
         'USER': 'teranga',
-        'PASSWORD': 'teranga',
-        'HOST': '85.214.193.29',
-        'PORT': '5433',
-
-        #'USER': '',
-        #'PASSWORD': '',
-        #'HOST': '',
-        #'PORT': '',
-        'ATOMIC_REQUESTS': True,
+        'PASSWORD': 'terangateranga',
+        'HOST': 'vaana.cvamgenajfwz.eu-central-1.rds.amazonaws.com',
+        'PORT': '5432',
+        # 'ATOMIC_REQUESTS': True,
     }
 }
 

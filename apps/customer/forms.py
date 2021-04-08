@@ -1,8 +1,9 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from oscar.apps.customer.forms import UserForm as CoreUserForm,EmailUserCreationForm as CoreEmailUserCreationForm
+from oscar.apps.customer.forms import UserForm as CoreUserForm, EmailUserCreationForm as CoreEmailUserCreationForm
 from oscar.core.compat import (existing_user_fields, get_user_model)
+
 
 User = get_user_model()
 
@@ -42,3 +43,22 @@ class EmailUserCreationForm(CoreEmailUserCreationForm):
         return user
 
 # ProfileForm = EmailUserCreationForm
+
+# Login form customization
+
+
+class CustomEmailAuthenticationForm(CoreEmailUserCreationForm):
+
+    email = forms.EmailField(label=_('Email address or username')) 
+    #username = forms.TextField(label=_('or username'))
+    redirect_url = forms.CharField(
+        widget=forms.HiddenInput, required=False)
+
+    def __init__(self, host, *args, **kwargs):
+        self.host = host
+        super().__init__(*args, **kwargs)
+
+    def clean_redirect_url(self):
+        url = self.cleaned_data['redirect_url'].strip()
+        if url and url_has_allowed_host_and_scheme(url, self.host):
+            return url
