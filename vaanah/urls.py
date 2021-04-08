@@ -39,4 +39,4 @@ urlpatterns = [
     # adds internationalization URLs
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
