@@ -11,7 +11,7 @@ User = get_user_model()
 class UserForm(CoreUserForm):
     class Meta:
         model = User
-        fields = CoreUserForm.Meta.fields + existing_user_fields(['address','recovery_email','username',])
+        fields = CoreUserForm.Meta.fields + existing_user_fields(['gender', 'country', 'city', 'street','recovery_email','username',])
 
     # def save(self, commit=True):
     #     user = super().save(commit=False)
@@ -29,7 +29,7 @@ ProfileForm = UserForm
 class EmailUserCreationForm(CoreEmailUserCreationForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'address','recovery_email','username',)
+        fields = ('email', 'first_name', 'last_name','gender', 'country', 'city', 'street','recovery_email','username',)
 
     def save(self, commit=True):
         user = super().save(commit=False)

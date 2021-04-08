@@ -43,12 +43,20 @@ SECRET_KEY = '!w191r985n+1r-r^v@c0!+q0+a0f7i2++2r+-)qtvv@0u9guy#'
 
 #email backend
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+OSCAR_FROM_EMAIL = 'support@terinnova.com'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#Email Sender parameters
+EMAIL_HOST          = 'smtp.strato.com'
+EMAIL_PORT          = 587
+EMAIL_HOST_USER     = 'support@terinnova.com'
+EMAIL_HOST_PASSWORD = '#TeamTerinnova2021'
+EMAIL_USE_TLS = True
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 #django-oscar stores
 GOOGLE_MAPS_API_KEY ='AIzaSyAh-Dqecabi3mVQSx8isuGNcvZHrszdhbs'
@@ -149,9 +157,9 @@ AUTH_USER_MODEL = 'user.User'
 
 
 AUTHENTICATION_BACKENDS = (
-    #'oscar.apps.customer.auth_backends.EmailBackend',
+    'oscar.apps.customer.auth_backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
-    'vaanah-app.apps.customer.authentification.EmailOrUsernameModelBackend'
+    #'vaanah-app.apps.customer.authentification.EmailOrUsernameModelBackend'
 )
 
 MIDDLEWARE = [
@@ -173,7 +181,8 @@ ROOT_URLCONF = 'vaanah.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates'),
+             ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -212,6 +221,7 @@ DATABASES = {
         'PASSWORD': 'terangateranga',
         'HOST': 'vaana.cvamgenajfwz.eu-central-1.rds.amazonaws.com',
         'PORT': '5432',
+        
         # 'ATOMIC_REQUESTS': True,
     }
 }
@@ -254,5 +264,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_URL = '/media/'
 
 MEDIA_URL = ''
