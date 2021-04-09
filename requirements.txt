@@ -30,7 +30,7 @@ osgeo4w-installer==1.4.0
 parse==1.19.0
 parse-type==0.5.2
 phonenumbers==8.12.20
-Pillow==8.1.2
+Pillow==8.2.0
 psycopg2==2.8.6
 purl==1.5
 pycountry==20.7.3
