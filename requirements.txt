@@ -18,7 +18,7 @@ django-sass
 django-tables2
 django-treebeard
 django-widget-tweaks
-factory-boy=
+factory-boy
 Faker
 Flask
 idna
