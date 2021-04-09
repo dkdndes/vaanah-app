@@ -41,8 +41,8 @@ if os.name == 'nt':
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!w191r985n+1r-r^v@c0!+q0+a0f7i2++2r+-)qtvv@0u9guy#'
 
+
 #email backend
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 OSCAR_FROM_EMAIL = 'support@terinnova.com'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #Email Sender parameters
@@ -77,7 +77,7 @@ LANGUAGES = [
 OSCAR_DASHBOARD_NAVIGATION += [
     {
         'label': _('Store manager'),
-        'icon': 'fa fa-shopping-bag',
+        'icon': 'fa fa-store',
         'url_name': 'stores-dashboard:store-list',
     },
     {
