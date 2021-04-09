@@ -19,7 +19,9 @@ from django.urls import include, path
 from django.apps import apps
 
 from django.views.i18n import JavaScriptCatalog
+from django.conf.urls.static import static
 
+from django.conf import settings
 
 
 urlpatterns = [
