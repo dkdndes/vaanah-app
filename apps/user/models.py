@@ -19,3 +19,6 @@ class User(AbstractUser):
 
     gender = models.CharField(max_length=20,
                               choices=GENDER_CHOICES, default=MR)
+
+# USERNAME_FIELD = 'username'
+# EMAIL_FIELD = 'email'
