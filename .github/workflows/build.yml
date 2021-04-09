@@ -47,9 +47,9 @@ jobs:
         ECR_REPOSITORY: vaanah-app
         IMAGE_TAG: ${{ 0.1 }}
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG:latest .
-        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG:latest 213153998492.dkr.ecr.eu-central-1.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG:latest
-        docker push 213153998492.dkr.ecr.eu-central-1.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG:latest
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 213153998492.dkr.ecr.eu-central-1.amazonaws.com/$ECR_REPOSITORY:latest
+        docker push 213153998492.dkr.ecr.eu-central-1.amazonaws.com/$ECR_REPOSITORY:latest
 
 #        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
