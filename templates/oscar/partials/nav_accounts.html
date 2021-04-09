@@ -133,8 +133,15 @@
                 {% else %}
                     <li class="nav-item mr-2">
                         <a id="login_link" href="{% url 'customer:login' %}" class="nav-link">
+                            {# <i class="fas fa-sign-in-alt mr-2"></i> #}
+                            {% trans "Login " %}
+                        </a>
+                    </li>
+
+                    <li class="nav-item mr-2">
+                        <a id="login_link" href="{% url 'customer:register' %}" class="nav-link">
                             <i class="fas fa-sign-in-alt mr-2"></i>
-                            {% trans "Login or register" %}
+                            {% trans "register" %}
                         </a>
                     </li>
                 {% endif %}
