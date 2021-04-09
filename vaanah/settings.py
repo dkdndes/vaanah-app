@@ -65,6 +65,8 @@ STORES_MAX_SEARCH_DISTANCE = None
 # Application definition
 
 
+TEMPLATE_DEBUG=True 
+THUMBNAIL_DEBUG=True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -235,4 +237,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 
-MEDIA_URL = ''
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
