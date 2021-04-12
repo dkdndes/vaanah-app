@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: dev
+  name: vaana-pod
+  labels: 
+    app: vaana        
+spec:
+  containers:
+    - name: vaana
+      image: 213153998492.dkr.ecr.eu-central-1.amazonaws.com/vaana:latest
+      command: [ "sleep" ]
+      args: [ "infinity" ]
+      ports:
+        - containerPort: 80
