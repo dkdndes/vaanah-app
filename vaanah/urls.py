@@ -24,6 +24,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
+#from apps.customer import auth_backends
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -40,19 +42,12 @@ urlpatterns = [
     path('stores/', apps.get_app_config('stores').urls),
 
     # adds internationalization URLs
-    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    #path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
     #password-reset urls
-    #path('', include('django.contrib.auth.urls'))
-    
-    # path('password-reset/', auth_views.PasswordResetView.as_view( template_name='registration/password_reset_form.html'), name='password_reset'),
-    
-    # path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
-    
-    # path('password-reset-confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm.html'), name='password_reset_confirm'),
-    
-    # path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html' ), name='password_reset_complete'),
-
     path('', auth_views.PasswordResetCompleteView.as_view(template_name='communication/emails/password_reset_complete.html' ), name='commtype_password_reset_body'),
+
+    #login
+    #path('', views.AuthenticationEmailBackend),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

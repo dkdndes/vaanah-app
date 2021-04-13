@@ -2,10 +2,14 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from oscar.apps.customer.forms import UserForm as CoreUserForm, EmailUserCreationForm as CoreEmailUserCreationForm
+from oscar.apps.customer.forms import EmailAuthenticationForm
 from oscar.core.compat import (existing_user_fields, get_user_model)
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.backends import ModelBackend
+
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import AuthenticationForm
 
 
 User = get_user_model()
@@ -14,7 +18,7 @@ User = get_user_model()
 class UserForm(CoreUserForm):
     class Meta:
         model = User
-        fields = CoreUserForm.Meta.fields + existing_user_fields(['gender', 'country', 'city', 'street','recovery_email','username',])
+        fields = CoreUserForm.Meta.fields + existing_user_fields(['username', 'gender', 'country', 'city', 'street','recovery_email',])
 
     # def save(self, commit=True):
     #     user = super().save(commit=False)
@@ -50,26 +54,29 @@ class EmailUserCreationForm(CoreEmailUserCreationForm):
 # Login form customization
 
 
-class CustomEmailAuthenticationForm(CoreEmailUserCreationForm):
-
-    email = forms.EmailField(label=_('Email address or username')) 
-    #username = forms.TextField(label=_('or username'))
-    redirect_url = forms.CharField(
-        widget=forms.HiddenInput, required=False)
-
-    def __init__(self, host, *args, **kwargs):
-        self.host = host
-        super().__init__(*args, **kwargs)
-
-    def clean_redirect_url(self):
-        url = self.cleaned_data['redirect_url'].strip()
-        if url and url_has_allowed_host_and_scheme(url, self.host):
-            return url
+class AuthenticationEmailBackend(ModelBackend):
+    def authenticate(self, request, username=None, password=None, *args, **kwargs):
+        UserModel = get_user_model()
+        try:
+            user = UserModel.objects.get(email=username)
+        except UserModel.DoesNotExist:
+            return None
+        else:
+            if user.check_password(password):
+                return user
+        return None
 
 
 
 
-class EmailOrUsernameModelBackend(ModelBackend):
+
+
+
+
+
+
+
+class EmailOrUsernameModelBackend(AuthenticationForm):
     def _authenticate(self, request, email=None, password=None, *args, **kwargs):
         if '@' in username:
             kwargs = {'email': username}
