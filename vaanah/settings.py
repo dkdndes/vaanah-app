@@ -60,9 +60,9 @@ ALLOWED_HOSTS = ['*']
 
 #django-oscar stores
 GOOGLE_MAPS_API_KEY ='AIzaSyAS4UrnPpjJQZE2iZjIFLo-FllVK4EqGeU'
-# STORES_GEOGRAPHIC_SRID = 3577
-# STORES_GEODETIC_SRID = 4326
-# STORES_MAX_SEARCH_DISTANCE = None
+STORES_GEOGRAPHIC_SRID = 3577
+STORES_GEODETIC_SRID = 4326
+STORES_MAX_SEARCH_DISTANCE = None
 
 # #internationalization restriction
 # LANGUAGES = [
@@ -158,9 +158,8 @@ AUTH_USER_MODEL = 'user.User'
 
 
 AUTHENTICATION_BACKENDS = (
-    #'oscar.apps.customer.auth_backends.EmailBackend',
+    'oscar.apps.customer.auth_backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
-    'vaanah-app.apps.customer.auth_backends.AuthenticationEmailBackend'
 )
 
 MIDDLEWARE = [

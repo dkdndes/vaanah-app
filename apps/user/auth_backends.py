@@ -7,15 +7,17 @@ from django.contrib.auth.forms import AuthenticationForm
 user_model = get_user_model()
 
 class AuthenticationEmailBackend(AuthenticationForm):
-    def authenticate(self, request, username=None, password=None):
+    def authenticate(self, request, uname=None, password=None):
         """ Authenticate a user based on email address as the user name. """
+        uname = forms.CharField(label=_("Email or username"), max_length=30)
+        password = forms.CharField(label=_("Password"), widget=forms.PasswordInput)
         try:
-            user = User.objects.get(email=username)
+            user = User.objects.get(email=uname)
             if user.check_password(password):
                 return user
         except User.DoesNotExist:
             try:
-                user = User.objects.get(username=username)
+                user = User.objects.get(uname=uname)
                 if user.check_password(password):
                     return user
             except User.DoesNotExist:
@@ -35,9 +37,9 @@ class AuthenticationEmailBackend(AuthenticationForm):
             print(user_obj)
             # username = user_obj['query']
             # password = user_obj['password']
-            username = user_obj.username
+            uname = user_obj.uname
             password = user_obj.password
-            user = authenticate(username=username, password=password)
+            user = authenticate(uname=uname, password=password)
             if user is not None:
                 print("in login")
                 login(request, user)

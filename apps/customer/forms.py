@@ -18,7 +18,7 @@ User = get_user_model()
 class UserForm(CoreUserForm):
     class Meta:
         model = User
-        fields = CoreUserForm.Meta.fields + existing_user_fields(['username', 'gender', 'country', 'city', 'street','recovery_email',])
+        fields = CoreUserForm.Meta.fields + existing_user_fields(['uname', 'gender', 'country', 'city', 'street','recovery_email',])
 
     # def save(self, commit=True):
     #     user = super().save(commit=False)
@@ -36,35 +36,18 @@ ProfileForm = UserForm
 class EmailUserCreationForm(CoreEmailUserCreationForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name','gender', 'country', 'city', 'street','recovery_email','username',)
+        fields = ('email', 'first_name', 'last_name','uname','gender', 'country', 'city', 'street','recovery_email',)
 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password1'])
 
-        if 'username' in [f.name for f in User._meta.fields]:
-            user.username = self.cleaned_data['username']
+        if 'uname' in [f.name for f in User._meta.fields]:
+            user.uname = self.cleaned_data['uname']
 
         if commit:
             user.save()
         return user
-
-# ProfileForm = EmailUserCreationForm
-
-# Login form customization
-
-
-class AuthenticationEmailBackend(ModelBackend):
-    def authenticate(self, request, username=None, password=None, *args, **kwargs):
-        UserModel = get_user_model()
-        try:
-            user = UserModel.objects.get(email=username)
-        except UserModel.DoesNotExist:
-            return None
-        else:
-            if user.check_password(password):
-                return user
-        return None
 
 
 

@@ -24,7 +24,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
-#from apps.customer import auth_backends
+from apps.user import views
 
 
 urlpatterns = [
@@ -48,6 +48,6 @@ urlpatterns = [
     path('', auth_views.PasswordResetCompleteView.as_view(template_name='communication/emails/password_reset_complete.html' ), name='commtype_password_reset_body'),
 
     #login
-    #path('', views.AuthenticationEmailBackend),
+    #path('/accounts/login/', views.AuthenticationEmailBackend),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
