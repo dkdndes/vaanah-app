@@ -28,6 +28,7 @@ $ pip freeze > requirements.txt
 $ pip install -r requirements.txt
 
 7- Then simply apply the migrations :
+$ python manage.py makemigrations
 $ python manage.py migrate
 
 8- You can now run the development server :

@@ -59,17 +59,17 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 #django-oscar stores
-GOOGLE_MAPS_API_KEY ='AIzaSyAh-Dqecabi3mVQSx8isuGNcvZHrszdhbs'
+GOOGLE_MAPS_API_KEY ='AIzaSyAS4UrnPpjJQZE2iZjIFLo-FllVK4EqGeU'
 STORES_GEOGRAPHIC_SRID = 3577
 STORES_GEODETIC_SRID = 4326
 STORES_MAX_SEARCH_DISTANCE = None
 
-#internationalization
+#internationalization restriction
 LANGUAGES = [
     ('es', 'Spanish'),
     ('de', 'German'),
     ('en', 'English'),
-    #('fr', 'French'),
+    ('fr', 'French'),
     #... and so on
 ]
 
@@ -145,21 +145,21 @@ INSTALLED_APPS = [
     'django_tables2',
     'apps.user',
     'stores',
-    'stores.dashboard'
+    'stores.dashboard',
+    #'compressor'
 ] 
 
 # from documentation site
 SITE_ID = 1
 
 
-# model user
+# user model 
 AUTH_USER_MODEL = 'user.User'
 
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
-    #'vaanah-app.apps.customer.authentification.EmailOrUsernameModelBackend'
 )
 
 MIDDLEWARE = [
@@ -174,6 +174,7 @@ MIDDLEWARE = [
     # from documantation site
     'oscar.apps.basket.middleware.BasketMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'vaanah.urls'
@@ -196,6 +197,8 @@ TEMPLATES = [
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.communication.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
+                #test languages
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -266,6 +269,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 

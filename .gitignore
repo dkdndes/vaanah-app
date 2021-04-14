@@ -1,4 +1,9 @@
 # exclude file that doesn't need to be documented in Source control
 
-vanah/__pycache__/
-cache/
+# vaanah/__pycache__/
+# cache/
+# apps/customer/__pycache__/
+# apps/user/__pycache__/
+
+*.pyc
+__pycache__
