@@ -38,8 +38,8 @@ class EmailUserCreationForm(CoreEmailUserCreationForm):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password1'])
 
-        if 'username' in [f.name for f in User._meta.fields]:
-            user.username = self.cleaned_data['username']
+        # if 'username' in [f.name for f in User._meta.fields]:
+            # user.username = self.cleaned_data['username']
 
         if commit:
             user.save()

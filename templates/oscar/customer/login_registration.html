@@ -20,9 +20,9 @@
 
 {% block content %}
 
-    <div class="row mb-5" style="background-color:  rgb(188 221 255 / 34%); padding: 2rem 0;">
+    <div class="row mb-5" style="background-color: #fff; padding: 2rem 0;">
         <div class="col-sm-4 login_form" style="position: relative; left:35%; ">
-            <form id="login_form" action="{{ request.get_full_path }}" method="post" class="card card-body bg-light" >
+            <form id="login_form" action="{{ request.get_full_path }}" method="post" class="card card-body bg-light" style="box-shadow: 0px 10px 50px 0px rgba(0,0,0,0.1);" >
                 <h2>{% trans 'Log In' %}</h2>
                 {% csrf_token %}
                 {% include "oscar/partials/form_fields.html" with form=login_form %}

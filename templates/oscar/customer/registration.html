@@ -22,9 +22,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row" style="background-color:  rgb(188 221 255 / 34%); padding: 2rem 0;">
+    <div class="row" style="background-color:  #fff; padding: 2rem 0;">
         <div class="col-sm-4 register_form" style="position: relative; left:35%; ">
-            <form id="register_form" method="post" class="card card-body bg-light">
+            <form id="register_form" method="post" class="card card-body bg-light" style="box-shadow: 0px 10px 50px 0px rgba(0,0,0,0.1);">
                 {% csrf_token %}
                 {% include "oscar/partials/form_fields.html"  %}
                 <button name="registration_submit" type="submit" value="Register" class="btn btn-primary btn-lg" data-loading-text="{%trans 'Registering...' %}">{% trans 'Register' %}</button>
