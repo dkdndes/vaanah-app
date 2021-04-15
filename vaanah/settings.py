@@ -65,13 +65,13 @@ STORES_GEODETIC_SRID = 4326
 STORES_MAX_SEARCH_DISTANCE = None
 
 # #internationalization restriction
-# LANGUAGES = [
-#     ('es', 'Spanish'),
-#     ('de', 'German'),
-#     ('en', 'English'),
-#     #('fr', 'French'),
-#     #... and so on
-# ]
+LANGUAGES = [
+    ('es', 'Spanish'),
+    ('de', 'German'),
+    ('en', 'English'),
+    ('fr', 'French'),
+    #... and so on
+]
 
 #Adding stores and admin to dashboard nav bar
 OSCAR_DASHBOARD_NAVIGATION += [
@@ -146,7 +146,6 @@ INSTALLED_APPS = [
     'apps.user',
     'stores',
     'stores.dashboard',
-    #'compressor'
 ] 
 
 # from documentation site
@@ -159,6 +158,7 @@ AUTH_USER_MODEL = 'user.User'
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',
+    #'vaanah-app.apps.user.forms.EmailAuthenticationForm'
     'django.contrib.auth.backends.ModelBackend',
 )
 

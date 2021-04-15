@@ -10,6 +10,8 @@ from django.contrib.auth.backends import ModelBackend
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
+from apps.customer.forms import EmailAuthenticationForm as CoreEmailUserCreationForm
+from django.utils.translation import gettext_lazy as _
 
 
 User = get_user_model()
@@ -49,22 +51,41 @@ class EmailUserCreationForm(CoreEmailUserCreationForm):
             user.save()
         return user
 
+# ProfileForm = EmailUserCreationForm
+
+# Login form customization
 
 
 
 
+# Login form customization
 
+
+
+class EmailAuthenticationForm(CoreEmailUserCreationForm):
+    username = forms.CharField(label=_("Email or username"))
+    redirect_url = forms.CharField(
+        widget=forms.HiddenInput, required=False)
+
+    # def __init__(self, host, *args, **kwargs):
+    #     self.host = host
+    #     super().__init__(*args, **kwargs)
+
+    # def clean_redirect_url(self):
+    #     url = self.cleaned_data['redirect_url'].strip()
+    #     if url and url_has_allowed_host_and_scheme(url, self.host):
+    #         return url
 
 
 
 
 
 class EmailOrUsernameModelBackend(AuthenticationForm):
-    def _authenticate(self, request, email=None, password=None, *args, **kwargs):
+    def _authenticate(self, request, username=None, password=None, *args, **kwargs):
         if '@' in username:
             kwargs = {'email': username}
         else:
-            kwargs = {'username': username}
+            kwargs = {'uname': username}
         try:
             user = User.objects.get(**kwargs)
             if user.check_password(password):
