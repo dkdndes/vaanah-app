@@ -24,6 +24,9 @@ class RegisterUserMixin(CoreRegisterUserMixin):
         to).
         """
         user = form.save()
-        print('Hellloooooooooooooooooooooooooooooooooooo')
+        user.is_active = False
+        user.save()
+        self.send_registration_email(user)
+        print('==============================',user.is_active)
 
         return user

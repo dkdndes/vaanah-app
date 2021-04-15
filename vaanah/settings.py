@@ -16,7 +16,7 @@ from oscar.defaults import *
 from django.contrib.gis.measure import D
 from django.db import models
 from pathlib import Path
-
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -40,6 +40,9 @@ if os.name == 'nt':
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!w191r985n+1r-r^v@c0!+q0+a0f7i2++2r+-)qtvv@0u9guy#'
+
+
+#email backend
 OSCAR_FROM_EMAIL = 'support@terinnova.com'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #Email Sender parameters
@@ -49,24 +52,47 @@ EMAIL_HOST_USER     = 'support@terinnova.com'
 EMAIL_HOST_PASSWORD = '#TeamTerinnova2021'
 EMAIL_USE_TLS = True
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
 #django-oscar stores
-GOOGLE_MAPS_API_KEY ='AIzaSyAh-Dqecabi3mVQSx8isuGNcvZHrszdhbs'
+GOOGLE_MAPS_API_KEY ='AIzaSyAS4UrnPpjJQZE2iZjIFLo-FllVK4EqGeU'
 STORES_GEOGRAPHIC_SRID = 3577
 STORES_GEODETIC_SRID = 4326
 STORES_MAX_SEARCH_DISTANCE = None
 
+# #internationalization restriction
+# LANGUAGES = [
+#     ('es', 'Spanish'),
+#     ('de', 'German'),
+#     ('en', 'English'),
+#     #('fr', 'French'),
+#     #... and so on
+# ]
 
+#Adding stores and admin to dashboard nav bar
+OSCAR_DASHBOARD_NAVIGATION += [
+    {
+        'label': _('Store manager'),
+        'icon': 'fa fa-store',
+        'url_name': 'stores-dashboard:store-list',
+    },
+    {
+        'label': _('Admin site'),
+        'icon': 'fas fa-lock',
+        'url_name': 'admin:index',
+        'access_fn': lambda user, url_name, url_args, url_kwargs: user.is_staff,
+    },
+]
 
-# Application definition
 
 
 TEMPLATE_DEBUG=True 
 THUMBNAIL_DEBUG=True
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -94,6 +120,7 @@ INSTALLED_APPS = [
     'oscar.apps.payment.apps.PaymentConfig',
     'oscar.apps.offer.apps.OfferConfig',
     'oscar.apps.order.apps.OrderConfig',
+    #'oscar.apps.customer.apps.CustomerConfig',
     'apps.customer.apps.CustomerConfig',
     'oscar.apps.search.apps.SearchConfig',
     'oscar.apps.voucher.apps.VoucherConfig',
@@ -120,12 +147,17 @@ INSTALLED_APPS = [
     'django_tables2',
     'apps.user',
     'stores',
-    'stores.dashboard'
+    'stores.dashboard',
+    #'compressor'
 ] 
 
-# from documantation site
+# from documentation site
 SITE_ID = 1
+
+
+# user model 
 AUTH_USER_MODEL = 'user.User'
+
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',
@@ -144,6 +176,7 @@ MIDDLEWARE = [
     # from documantation site
     'oscar.apps.basket.middleware.BasketMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'vaanah.urls'
@@ -166,6 +199,8 @@ TEMPLATES = [
                 'oscar.apps.checkout.context_processors.checkout',
                 'oscar.apps.communication.notifications.context_processors.notifications',
                 'oscar.core.context_processors.metadata',
+                #test languages
+                'django.template.context_processors.i18n',
             ],
         },
     },
@@ -233,8 +268,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
