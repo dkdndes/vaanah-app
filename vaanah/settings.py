@@ -90,6 +90,8 @@ OSCAR_DASHBOARD_NAVIGATION += [
 
 
 
+TEMPLATE_DEBUG=True 
+THUMBNAIL_DEBUG=True
 # Application definition
 
 INSTALLED_APPS = [
