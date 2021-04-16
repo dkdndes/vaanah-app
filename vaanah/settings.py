@@ -64,14 +64,14 @@ STORES_GEOGRAPHIC_SRID = 3577
 STORES_GEODETIC_SRID = 4326
 STORES_MAX_SEARCH_DISTANCE = None
 
-# #internationalization restriction
-# LANGUAGES = [
-#     ('es', 'Spanish'),
-#     ('de', 'German'),
-#     ('en', 'English'),
-#     #('fr', 'French'),
-#     #... and so on
-# ]
+#internationalization restriction
+LANGUAGES = [
+    ('es', 'Spanish'),
+    ('de', 'German'),
+    ('en', 'English'),
+    ('fr', 'French'),
+    #... and so on
+]
 
 #Adding stores and admin to dashboard nav bar
 OSCAR_DASHBOARD_NAVIGATION += [
