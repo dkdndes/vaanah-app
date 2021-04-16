@@ -19,6 +19,10 @@ from django.apps import apps
 from django.views.i18n import JavaScriptCatalog
 from django.conf.urls.static import static
 from django.conf import settings
+
+from django.contrib.auth import views as auth_views
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     # from documantation site
@@ -31,4 +35,8 @@ urlpatterns = [
     path('stores/', apps.get_app_config('stores').urls),
     # adds internationalization URLs
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+
+    #password-reset urls
+    path('', auth_views.PasswordResetCompleteView.as_view(template_name='communication/emails/password_reset_complete.html' ), name='commtype_password_reset_body'),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,15 @@
+{% extends "oscar/partials/nav_accounts.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{{ homepage_url }}">{% trans 'Home' %}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans 'Store ' %}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+<h1>Hello </h1>
