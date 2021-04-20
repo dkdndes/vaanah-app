@@ -42,7 +42,7 @@ urlpatterns = [
     path('stores/', apps.get_app_config('stores').urls),
 
     # adds internationalization URLs
-    #path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
     #password-reset urls
     path('', auth_views.PasswordResetCompleteView.as_view(template_name='communication/emails/password_reset_complete.html' ), name='commtype_password_reset_body'),
