@@ -36,7 +36,7 @@ ProfileForm = UserForm
 class EmailUserCreationForm(CoreEmailUserCreationForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name','uname','gender', 'country', 'city', 'street','recovery_email',)
+        fields = ('email', 'first_name', 'last_name','type_user','uname','gender', 'country', 'city', 'street','recovery_email',)
 
     def save(self, commit=True):
         user = super().save(commit=False)
