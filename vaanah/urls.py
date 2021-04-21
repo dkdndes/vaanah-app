@@ -25,6 +25,8 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 
 from apps.customer import views 
+from account.views import VerifyEmail
+
 #from apps import store_view 
 #from boutique import views
 
@@ -60,6 +62,9 @@ urlpatterns = [
 
     #Partner store 
     #path('store/', store_view.StoreView)
+    
+    #Email verification
+    path('email-verify/', VerifyEmail.as_view(), name='email-verify'),
 
     #Boutique
     path('dashboard/boutique/', apps.get_app_config('boutique_dashboard').urls),
