@@ -61,4 +61,8 @@ urlpatterns = [
     #Partner store 
     #path('store/', store_view.StoreView)
 
+    #Boutique
+    path('dashboard/boutique/', apps.get_app_config('boutique_dashboard').urls),
+    path('boutique/', apps.get_app_config('boutique').urls),
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

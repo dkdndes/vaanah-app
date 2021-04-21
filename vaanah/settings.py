@@ -87,6 +87,11 @@ OSCAR_DASHBOARD_NAVIGATION += [
         'url_name': 'admin:index',
         'access_fn': lambda user, url_name, url_args, url_kwargs: user.is_staff,
     },
+    {
+    'label': _('Boutiques'),
+    'icon': 'fas fa-store',
+    'url_name': 'boutique-dashboard:boutique-list',
+    }
 ]
 
 
@@ -151,7 +156,8 @@ INSTALLED_APPS = [
     'stores',
     'stores.dashboard',
     'account',
-    #'compressor'
+    'boutique.apps.BoutiqueConfig',
+    'boutique.dashboard.apps.DashboardConfig',
 ] 
 
 # from documentation site
