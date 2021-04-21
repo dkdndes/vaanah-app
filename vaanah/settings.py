@@ -90,7 +90,8 @@ OSCAR_DASHBOARD_NAVIGATION += [
 
 
 
-# Application definition
+TEMPLATE_DEBUG=True 
+THUMBNAIL_DEBUG=True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -228,7 +229,6 @@ DATABASES = {
         # 'ATOMIC_REQUESTS': True,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
