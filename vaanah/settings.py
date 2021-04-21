@@ -44,13 +44,14 @@ SECRET_KEY = '!w191r985n+1r-r^v@c0!+q0+a0f7i2++2r+-)qtvv@0u9guy#'
 
 #email backend
 OSCAR_FROM_EMAIL = 'support@terinnova.com'
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 #Email Sender parameters
 EMAIL_HOST          = 'smtp.strato.com'
 EMAIL_PORT          = 587
 EMAIL_HOST_USER     = 'support@terinnova.com'
 EMAIL_HOST_PASSWORD = '#TeamTerinnova2021'
 EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -64,14 +65,14 @@ STORES_GEOGRAPHIC_SRID = 3577
 STORES_GEODETIC_SRID = 4326
 STORES_MAX_SEARCH_DISTANCE = None
 
-# #internationalization restriction
-# LANGUAGES = [
-#     ('es', 'Spanish'),
-#     ('de', 'German'),
-#     ('en', 'English'),
-#     #('fr', 'French'),
-#     #... and so on
-# ]
+#internationalization restriction
+LANGUAGES = [
+    ('es', 'Spanish'),
+    ('de', 'German'),
+    ('en', 'English'),
+    ('fr', 'French'),
+    #... and so on
+]
 
 #Adding stores and admin to dashboard nav bar
 OSCAR_DASHBOARD_NAVIGATION += [
@@ -92,6 +93,7 @@ OSCAR_DASHBOARD_NAVIGATION += [
 
 TEMPLATE_DEBUG=True 
 THUMBNAIL_DEBUG=True
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -101,6 +103,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'rest_framework',
 
     # from documantation site
     'django.contrib.sites',
@@ -147,6 +150,7 @@ INSTALLED_APPS = [
     'apps.user',
     'stores',
     'stores.dashboard',
+    'account',
     #'compressor'
 ] 
 
@@ -229,6 +233,13 @@ DATABASES = {
         # 'ATOMIC_REQUESTS': True,
     }
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
