@@ -59,17 +59,18 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 #django-oscar stores
-GOOGLE_MAPS_API_KEY ='AIzaSyAS4UrnPpjJQZE2iZjIFLo-FllVK4EqGeU'
+GOOGLE_MAPS_API_KEY = 'AIzaSyCq3vCI7I3N81nvB-L_BK5nhyQA7cxt10s'
 STORES_GEOGRAPHIC_SRID = 3577
 STORES_GEODETIC_SRID = 4326
 STORES_MAX_SEARCH_DISTANCE = None
 
+
 # #internationalization restriction
 LANGUAGES = [
-    ('es', 'Spanish'),
-    ('de', 'German'),
-    ('en', 'English'),
-    ('fr', 'French'),
+    ('es', _('Spanish')),
+    ('de', _('German')),
+    ('en', _('English')),
+    ('fr', _('French')),
     #... and so on
 ]
 
@@ -86,6 +87,11 @@ OSCAR_DASHBOARD_NAVIGATION += [
         'url_name': 'admin:index',
         'access_fn': lambda user, url_name, url_args, url_kwargs: user.is_staff,
     },
+    {
+        'label': _('Boutiques'),
+        'icon': 'fas fa-store',
+        'url_name': 'boutique-dashboard:boutique-list',
+    }
 ]
 
 
@@ -110,7 +116,8 @@ INSTALLED_APPS = [
     'oscar.apps.checkout.apps.CheckoutConfig',
     'oscar.apps.address.apps.AddressConfig',
     'oscar.apps.shipping.apps.ShippingConfig',
-    'oscar.apps.catalogue.apps.CatalogueConfig',
+    #'oscar.apps.catalogue.apps.CatalogueConfig',
+    'apps.catalogue.apps.CatalogueConfig',
     'oscar.apps.catalogue.reviews.apps.CatalogueReviewsConfig',
     'oscar.apps.communication.apps.CommunicationConfig',
     'oscar.apps.partner.apps.PartnerConfig',
@@ -146,6 +153,9 @@ INSTALLED_APPS = [
     'apps.user',
     'stores',
     'stores.dashboard',
+    #Trying boutique
+    'boutique.apps.BoutiqueConfig',
+    'boutique.dashboard.apps.DashboardConfig',
 ] 
 
 # from documentation site
@@ -155,10 +165,12 @@ SITE_ID = 1
 # user model 
 AUTH_USER_MODEL = 'user.User'
 
+# login redirect
+#sLOGIN_REDIRECT_URL = 'home/'
 
 AUTHENTICATION_BACKENDS = (
     'oscar.apps.customer.auth_backends.EmailBackend',
-    #'vaanah-app.apps.user.forms.EmailAuthenticationForm'
+    #'apps.customer.forms.EmailAuthenticationForm',
     'django.contrib.auth.backends.ModelBackend',
 )
 

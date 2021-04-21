@@ -25,6 +25,8 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 
 from apps.customer import views 
+#from apps import store_view 
+#from boutique import views
 
 
 urlpatterns = [
@@ -32,7 +34,13 @@ urlpatterns = [
 
     # from documantation site
     path('i18n/', include('django.conf.urls.i18n')),
+
+    path('dashboard/boutique/', apps.get_app_config('boutique_dashboard').urls),
+    path('boutique/', apps.get_app_config('boutique').urls),
+
     path('', include(apps.get_app_config('oscar').urls[0])),
+
+
 
     # django-stores
     # adds URLs for the dashboard store manager
@@ -41,13 +49,16 @@ urlpatterns = [
     # adds URLs for overview and detail pages
     path('stores/', apps.get_app_config('stores').urls),
 
-    # adds internationalization URLs
-    #path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    # adds internationalization URLs for stores
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
     #password-reset urls
     path('', auth_views.PasswordResetCompleteView.as_view(template_name='communication/emails/password_reset_complete.html' ), name='commtype_password_reset_body'),
 
     #login
-    path('accounts/login/', views.AccountAuth.as_view()),
+    #path('', views.AccountAuth.as_view()),
+
+    #Partner store 
+    #path('store/', store_view.StoreView)
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

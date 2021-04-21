@@ -21,5 +21,5 @@ class User(AbstractUser):
                               choices=GENDER_CHOICES, default=MR)
 
  
-USERNAME_FIELD = 'uname'
+# USERNAME_FIELD = 'uname'
 #EMAIL_FIELD = 'email'
