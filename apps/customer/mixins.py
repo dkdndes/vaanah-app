@@ -80,5 +80,5 @@ class RegisterUserMixin(CoreRegisterUserMixin):
                     self.request,'user is already linked to a partner')
         # return redirect('dashboard:partner-manage', pk=partner_pk)
         messages.info(
-                    self.request,' Please check you email to activate your account')
+                    self.request,' Please check you email to activate your account before login')
         return user
