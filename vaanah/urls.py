@@ -23,6 +23,7 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 
 from apps.user import views
+from account.views import VerifyEmail
 
 
 urlpatterns = [
@@ -38,6 +39,8 @@ urlpatterns = [
     # adds internationalization URLs
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     #path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    # adds internationalization URLs
+    path('email-verify/', VerifyEmail.as_view(), name='email-verify'),
 
     #password-reset urls
     path('', auth_views.PasswordResetCompleteView.as_view(template_name='communication/emails/password_reset_complete.html' ), name='commtype_password_reset_body'),

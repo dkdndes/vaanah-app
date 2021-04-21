@@ -28,5 +28,6 @@ class User(AbstractUser):
                               choices=TYPE_CHOICES, default=COSTUMER)
     gender = models.CharField(max_length=20,
                               choices=GENDER_CHOICES, default=MR)
+    is_verified = models.BooleanField(default=False)
 
  
