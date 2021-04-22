@@ -15,9 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-
 from django.apps import apps
-
 from django.views.i18n import JavaScriptCatalog
 from django.conf.urls.static import static
 
@@ -32,13 +30,8 @@ from account.views import VerifyEmail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
     # from documantation site
     path('i18n/', include('django.conf.urls.i18n')),
-
-    path('dashboard/boutique/', apps.get_app_config('boutique_dashboard').urls),
-    path('boutique/', apps.get_app_config('boutique').urls),
-
     path('', include(apps.get_app_config('oscar').urls[0])),
 
     path('email-verify/', VerifyEmail.as_view(), name='email-verify'),
@@ -50,21 +43,21 @@ urlpatterns = [
     # django-stores
     # adds URLs for the dashboard store manager
     path('dashboard/stores/', apps.get_app_config('stores_dashboard').urls),
-
     # adds URLs for overview and detail pages
     path('stores/', apps.get_app_config('stores').urls),
-
-    # adds internationalization URLs for stores
+    # adds internationalization URLs
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    #path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    # adds internationalization URLs
+
+    #Email verification
+    path('email-verify/', VerifyEmail.as_view(), name='email-verify'),
 
     #password-reset urls
     path('', auth_views.PasswordResetCompleteView.as_view(template_name='communication/emails/password_reset_complete.html' ), name='commtype_password_reset_body'),
 
     #login
-    #path('', views.AccountAuth.as_view()),
-
-    #Partner store 
-    #path('store/', store_view.StoreView)
+    #path('/accounts/login/', views.AuthenticationEmailBackend),
 
     #Boutique
     path('dashboard/boutique/', apps.get_app_config('boutique_dashboard').urls),
