@@ -25,6 +25,7 @@ from django.conf import settings
 from django.contrib.auth import views as auth_views
 
 from apps.customer import views 
+from account.views import VerifyEmail
 #from apps import store_view 
 #from boutique import views
 
@@ -39,6 +40,10 @@ urlpatterns = [
     path('boutique/', apps.get_app_config('boutique').urls),
 
     path('', include(apps.get_app_config('oscar').urls[0])),
+
+    path('email-verify/', VerifyEmail.as_view(), name='email-verify'),
+    #password-reset urls
+    path('', auth_views.PasswordResetCompleteView.as_view(template_name='communication/emails/password_reset_complete.html' ), name='commtype_password_reset_body'),
 
 
 
