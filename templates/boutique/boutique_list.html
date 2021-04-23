@@ -33,16 +33,16 @@
     </div>
 </section>
 {% else %}
-<p class="nonefound">{% trans "No products found." %}</p>
+<!-- <p class="nonefound">{% trans "No products found." %}</p> -->
 {% endif %}
-<form method="post" class="order_table">
+<!-- <form method="post" class="order_table"> -->
     {% csrf_token %}
-    <table class="table table-striped table-bordered">
-        <caption>
+    <!-- <table class="table table-striped table-bordered"> -->
+        <!-- <caption>
             <i class="fas fa-briefcase"></i> {{ queryset_description }}
-        </caption>
-        {% for tree_category in tree_categories %}
-        <li class="mt-2">
+        </caption> -->
+        <!-- {% for tree_category in tree_categories %} -->
+        <!-- <li class="mt-2">
             <a href="{{ tree_category.url }}">
                 {% if tree_category.pk == category.pk %}
                     <strong>{{ tree_category.name }}</strong>
@@ -53,23 +53,44 @@
 
             {% if tree_category.has_children %}<ul>{% else %}</li>{% endif %}
             {% for n in tree_category.num_to_close %}
-                </ul></li>
-            {% endfor %}
-        {% endfor %}
+                </ul></li> -->
+            <!-- {% endfor %}
+        {% endfor %} -->
         {% if partners %}
-            <tr>
-                <th>{% anchor 'name' _('Name') %}</th>
-                <th>{% trans 'Users' %}</th>
-                <th>{% trans 'Addresses' %}</th>
-                <th>&nbsp;</th>
-            </tr>
+            <!-- <tr> -->
+                <!-- <th>{% anchor 'name' _('Name') %}</th> -->
+                <!-- <th>{% trans 'Users' %}</th> -->
+                <!-- <th>{% trans 'Addresses' %}</th> -->
+                <!-- <th>&nbsp;</th> -->
+            <!-- </tr> -->
             {% for partner in partners %}
-                <tr>
-                    <td>
-                        <li class="col-sm-6 col-md-4 col-lg-3">{{ partner }}</li>
+                <!-- <tr> -->
+                    <!-- <td> -->
+                        <div>
 
-                    </td>
-                    <td>
+                            <!-- <h3>{% trans 'Name' %}</h3> -->
+                            <h2 class="col-sm-6 col-md-4 col-lg-3">
+                                <a href="">{{ partner }}</a>
+                            </h2>
+                            
+
+                            <!-- <h4>{% trans 'Addresses' %}</h4> -->
+                            {% with addresses=partner.addresses.all %}
+                            {% if addresses %}
+                            <div>
+                                {% for address in addresses %}
+                                    <h5>{{ address.summary }}</h5>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                                {% trans 'No address associated.' %}
+                            {% endif %}
+                            {% endwith %}
+                            <hr>
+                        </div>
+
+                    <!-- </td> -->
+                    <!-- <td>
                         {% with users=partner.users.all %}
                             {% if users %}
                                 <ul>
@@ -85,8 +106,8 @@
                                 {% trans 'No users associated.' %}
                             {% endif %}
                         {% endwith %}
-                    </td>
-                    <td>
+                    </td> -->
+                    <!-- <td>
                         {% with addresses=partner.addresses.all %}
                         {% if addresses %}
                             <ul>
@@ -98,8 +119,8 @@
                             {% trans 'No address associated.' %}
                         {% endif %}
                         {% endwith %}
-                    </td>
-                    <td>
+                    </td>  -->
+                    <!-- <td>
                         <div class="btn-toolbar">
                             <div class="dropdown">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -121,15 +142,15 @@
                                 </div>
                             </div>
                         </div>
-                    </td>
-                </tr>
+                    </td> -->
+                <!-- </tr> 
             {% endfor %}
         {% else %}
             <tr><td>{% trans "No partners found." %}</td></tr>
         {% endif %}
     </table>
     {% include "oscar/dashboard/partials/pagination.html" %}
-</form>
+</form> -->
     <!-- {% if not boutique_list %}
         <p>{% trans "There are no boutique at the moment." %}</p>
     {% else %}
@@ -140,4 +161,6 @@
         </p> <hr/>
         {% endfor %}
     {% endif %} -->
-{% endblock content %}
+
+    
+    {% endblock content %}
