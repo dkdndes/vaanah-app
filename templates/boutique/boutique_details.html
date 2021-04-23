@@ -13,7 +13,7 @@
             <li class="breadcrumb-item" aria-current="page">
               <a href="{% url 'boutique:index' %}">{% trans "Boutiques" %}</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">{{ boutique.name }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ partner.name }}</li>
         </ol>
     </nav>
 {% endblock %}
@@ -21,9 +21,16 @@
     {% trans "Boutique" %}
 {% endblock %}
 {% block content %}
-    <p>
-      <h2>{{ boutique.name }}</h2> <br>
-      The boutique is in: {{ boutique.city }} <br>
-      The boutique's manager is Mr/Mrs: <strong>{{ boutique.manager }} </strong>
-    </p>
+    <h2>{{ partner.name }}</h2>
+    {% with addresses=partner.addresses.all %}
+        {% if addresses %}
+            <ul>
+            {% for address in addresses %}
+                {{ address.summary }}
+            {% endfor %}
+            </ul>
+        {% else %}
+            {% trans 'No address associated.' %}
+        {% endif %}
+    {% endwith %}
 {% endblock content %}

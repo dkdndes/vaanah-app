@@ -47,32 +47,3 @@ class AuthenticationEmailBackend(AuthenticationForm):
             else:
                 return render(request, 'login1.html',  {'form': form})
         return render(request, 'articles/login1.html',{'form':form})
-
-
-
-
-   
-    # def authenticate(self, request, username=None, password=None, **kwargs):
-    #     if username is None:
-    #         username = kwargs.get(user_model.USERNAME_FIELD)
-    #     if username is None or password is None:
-    #         return
-    #     try:
-    #         validate_email(username)
-    #     except ValidationError as e:
-    #         kwargs = {'username__iexact': username}  # remove __iexact to make it case sensitive
-    #     else:
-    #         kwargs = {'email__iexact': username}  # remove __iexact to make it case sensitive
-    #     try:
-    #         user = user_model.objects.get(**kwargs)
-    #     except user_model.DoesNotExist:
-    #         return None
-    #     else:
-    #         if user.check_password(password) and self.user_can_authenticate(user):
-    #             return user
-
-    # def get_user(self, user_id):
-    #     try:
-    #         return user_model.objects.get(pk=user_id)
-    #     except user_model.DoesNotExist:
-    #         return None
