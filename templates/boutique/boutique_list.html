@@ -70,7 +70,7 @@
 
                             <!-- <h3>{% trans 'Name' %}</h3> -->
                             <h2 class="col-sm-6 col-md-4 col-lg-3">
-                                <a href="">{{ partner }}</a>
+                                <a href="{% url 'boutique:index' %}">{{ partner }}</a>
                             </h2>
                             
 
@@ -110,11 +110,9 @@
                     <!-- <td>
                         {% with addresses=partner.addresses.all %}
                         {% if addresses %}
-                            <ul>
-                                {% for address in addresses %}
-                                    <li>{{ address.summary }}</li>
-                                {% endfor %}
-                            </ul>
+                            {% for address in addresses %}
+                                <p>{{ address.summary }}</p>
+                            {% endfor %}
                         {% else %}
                             {% trans 'No address associated.' %}
                         {% endif %}
@@ -146,7 +144,7 @@
                 <!-- </tr> 
             {% endfor %}
         {% else %}
-            <tr><td>{% trans "No partners found." %}</td></tr>
+            <tr><td>{% trans "No boutiques found." %}</td></tr>
         {% endif %}
     </table>
     {% include "oscar/dashboard/partials/pagination.html" %}
