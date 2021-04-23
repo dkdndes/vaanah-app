@@ -21,16 +21,12 @@
     {% trans "Boutique" %}
 {% endblock %}
 {% block content %}
-    <p>
-      <h2>{{ partner.name }}</h2> <br>
-      <h4>{{ partner.address }}</h4>
-    </p>
     <h2>{{ partner.name }}</h2>
     {% with addresses=partner.addresses.all %}
         {% if addresses %}
             <ul>
             {% for address in addresses %}
-                <li>{{ address.summary }}</li>
+                {{ address.summary }}
             {% endfor %}
             </ul>
         {% else %}

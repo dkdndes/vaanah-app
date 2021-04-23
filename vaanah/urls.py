@@ -22,8 +22,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
+from apps.user import views
+
 from apps.customer import views 
 from account.views import VerifyEmail
+#from apps import store_view 
+#from boutique import views
+
 #from apps import store_view 
 #from boutique import views
 
@@ -58,6 +63,12 @@ urlpatterns = [
 
     #login
     #path('/accounts/login/', views.AuthenticationEmailBackend),
+    #path('', views.AccountAuth.as_view()),
+
+    #Partner store 
+    #path('store/', store_view.StoreView)
+    
+ 
 
     #Boutique
     path('dashboard/boutique/', apps.get_app_config('boutique_dashboard').urls),
