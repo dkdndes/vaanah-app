@@ -26,20 +26,7 @@
 </div>
 {% endblock header %}
 
-
 {% block dashboard_content %}
-<div class="table-header">
-  <h3><i class="fas fa-search"></i>{% trans "Search Boutiques" %}</h3>
-</div>
-<div class="card card-body">
-  <form method="get" class="form-inline">
-    {% include "oscar/dashboard/partials/form_fields_inline.html" with form=filterform %}
-    <button type="submit" class="btn btn-primary">{% trans "Search" %}</button>
-    {% if not filterform.is_empty %}
-    <a href="?" class="btn">{% trans "Reset" %}</a>
-    {% endif %}
-  </form>
-</div>
 
 <div class="card card-body bg-light">
   <form method="get" class="form-inline">
@@ -131,7 +118,7 @@
   {% include "oscar/dashboard/partials/pagination.html" %}
 </form>
 
-{% if boutique_list.count %}
+<!-- {% if boutique_list.count %}
 <form method="post" class="order_table">
   {% csrf_token %}
   <table class="table table-striped table-bordered">
@@ -162,6 +149,6 @@
 
 {% else %}
 <p>{% trans "No companies found." %}</p>
-{% endif %}
+{% endif %} -->
 
 {% endblock dashboard_content %}
